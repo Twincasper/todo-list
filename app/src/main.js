@@ -60,6 +60,7 @@ const handleNewTodo = (e) => {
 };
 
 const main = () => {
+  initializeTodosIfEmpty();
   const form = document.querySelector("form#new-todo-form");
   form.addEventListener('submit', handleNewTodo);
   const ul = document.querySelector('ul#todos-list');
@@ -67,8 +68,6 @@ const main = () => {
   ul.addEventListener('click', handleDelete);
   
   renderTodos();
-
-  initializeTodosIfEmpty();
 };
 
 main();
