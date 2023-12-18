@@ -1,7 +1,46 @@
 import './style.css'
 import initialTodos from './todos.json';
 import { v4 as uuidv4 } from 'uuid';
-import { getAllTodos, initializeTodosIfEmpty, addTodo, toggleTodoComplete, deleteTodo } from './data-layer-utils';
+import { getAllTodos, initializeTodosIfEmpty, addTodo, toggleTodoComplete, deleteTodo, } from './data-layer-utils';
+
+const renderTodoCard = (todo) => {
+  const todosList = document.querySelector("ul#todos-list");
+  const li = document.createElement('li');
+  const h3 = document.createElement('h3');
+
+  li.dataset.uuid = todo.uuid;
+  li.classList.add('todo-card');
+  h3.textContent = todo.title;
+
+  const labelInputButton = document.createElement('div');
+  labelInputButton.innerHTML = `
+    <div class='label-input-container'>
+      <label>Complete</label>
+      <input type="checkbox" name="isComplete" ${todo.isComplete ? "checked" : ""}>
+    </div>
+    <button class='delete-todo'>🗑️</button>`;
+  li.append(h3, labelInputButton);
+  todosList.append(li);
+}
+
+const renderTodos = () => {
+  document.querySelector('ul#todos-list').innerHTML = "";
+  getAllTodos().forEach(renderTodoCard);
+}
+
+const handleTodoChange = (e) => {
+  if (!e.target.matches('input[type="checkbox"]')) return;
+  const uuid = e.target.closest('#todos-list>li').dataset.uuid;
+  toggleTodoComplete(uuid);
+  renderTodos();
+}
+
+const handleDelete = (e) => {
+  if (!e.target.matches('button.delete-todo')) return;
+  const uuid = e.target.closest('#todos-list>li').dataset.uuid;
+  deleteTodo(uuid);
+  renderTodos();
+}
 
 const handleNewTodo = (e) => {
   e.preventDefault();
@@ -14,6 +53,8 @@ const handleNewTodo = (e) => {
   }
 
   addTodo(newTodo);
+
+  renderTodos();
   
   form.reset();
 };
@@ -21,7 +62,13 @@ const handleNewTodo = (e) => {
 const main = () => {
   const form = document.querySelector("form#new-todo-form");
   form.addEventListener('submit', handleNewTodo);
+  const ul = document.querySelector('ul#todos-list');
+  ul.addEventListener('input', handleTodoChange);
+  ul.addEventListener('click', handleDelete);
   
+  renderTodos();
+
+  initializeTodosIfEmpty();
 };
 
 main();

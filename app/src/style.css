@@ -5,12 +5,18 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #292c61;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 
@@ -33,6 +39,26 @@ h1 {
   padding: 2rem;
   text-align: center;
 }
+
+h2 {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #888efa;
+}
+
+.todo-card {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  border-radius: 0.3rem;
+  background: #747bff;
+  box-shadow: 0.5rem 0.5rem #5257b5;
+}
+
+.todo-card:hover {
+  transform: scale(1.2);
+  transition: 3s;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {

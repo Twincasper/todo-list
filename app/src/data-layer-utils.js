@@ -61,27 +61,3 @@ export const initializeTodosIfEmpty = () => {
   if (getAllTodos().length === 0) setLocalStorageKey('todos', initialTodos);
 }
 
-const renderTodoCard = (todo) => {
-  const todosList = document.querySelector("ul#todos-list");
-  const li = document.createElement('li');
-  const h3 = document.createElement('h3');
-
-  li.dataset.uuid = todo.uuid;
-  li.classList.add('todo-card');
-  h3.textContent = todo.title;
-
-  const labelInputButton = document.createElement('div');
-  labelInputButton.innerHTML = `
-    <div class='label-input-container'>
-      <label>Complete</label>
-      <input type="checkbox" name="isComplete" ${todo.isComplete ? "checked" : ""}>
-    </div>
-    <button class='delete-todo'>🗑️</button>`;
-  li.append(h3, labelInputButton);
-  todosList.append(li);
-}
-
-const renderTodos = () => {
-  document.querySelector('ul#todos-list').innerHTML = "";
-  getAllTodos().forEach(renderTodoCard);
-}
